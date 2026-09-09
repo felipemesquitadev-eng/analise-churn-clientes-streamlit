@@ -57,3 +57,12 @@ pg = st.navigation({
 })
 
 pg.run()
+
+st.divider()
+st.caption("""
+💳 **Painel de Análise e Previsão de Churn** | 2026  
+Desenvolvido por:  
+**Felipe Scarpin Mesquita** • [LinkedIn](https://www.linkedin.com/in/felipe-scarpin-mesquita-b8a8893aa/) • [GitHub](https://github.com/felipemesquitadev-eng)  
+**Alana Generoso Fidélis da Cruz** • [LinkedIn](https://www.linkedin.com/in/alanageneroso05/) • [GitHub](https://github.com/alanageneroso05)  
+*Fonte dos dados: Kaggle (Credit Card Customers) • Projeto demonstrativo para portfólio.*
+""")
