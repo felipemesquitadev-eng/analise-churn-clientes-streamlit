@@ -52,7 +52,7 @@ simulador = st.Page(
 )
 
 pg = st.navigation({
-    "Navegação": [pagina_inicial],
+    "Introdução": [pagina_inicial],
     "Painéis": [visao_negocio, qualidade_ativo, simulador]
 })
 
