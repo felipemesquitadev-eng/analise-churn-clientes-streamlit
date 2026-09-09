@@ -78,9 +78,7 @@ fig_renda = px.bar(
     text_auto=True,
     color_discrete_sequence=['#1f77b4']
 )
-
 col_grafico1.plotly_chart(fig_renda, use_container_width=True)
-
 
 # GRÁFICO 2: Proporção de Churn (Gráfico de Rosca)
 df_status = df_filtrado['status_cliente'].value_counts().reset_index()
@@ -89,9 +87,13 @@ df_status.columns = ['Status', 'Quantidade']
 fig_status = px.pie(
     df_status, 
     names='Status', 
-    values='Quantidade', 
+    values='Quantidade',
+    color='Status',
     title='Proporção de Status do Cliente',
     hole=0.4,
-    color_discrete_sequence=['#2ca02c', '#d62728']
+    color_discrete_map={
+        'Ativo': '#2ca02c',
+        'Cancelado': '#d62728'
+    }
 )
 col_grafico2.plotly_chart(fig_status, use_container_width=True)
