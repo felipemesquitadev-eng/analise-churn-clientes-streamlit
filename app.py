@@ -1,20 +1,27 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Dashboard de Churn",
+    page_title="Previsão de Churn",
     page_icon="💳",
-    layout="wide"
+    layout="centered"
 )
 
-st.title("💳 Previsão e Análise de Churn - Cartões de Crédito")
+# 2. Título Principal
+st.title("💳 Previsão e Análise de Churn de Cartões de Crédito")
 
-st.markdown("""
-Bem-vindo ao painel interativo de análise de clientes! 
+st.write("""
+Bem-vindo ao **Dashboard Executivo de Análise de Clientes**. 
 
-Utilize o menu lateral para navegar entre as seções:
-* **01 - Visão de Negócio:** Analise o perfil demográfico e as métricas gerais da base de clientes.
-* **02 - Qualidade do Ativo:** Acompanhe o comportamento financeiro, limites de crédito, saldos e transações.
-* **03 - Simulador de Churn:** Insira os dados de um cliente para prever a probabilidade de cancelamento do cartão.
+Este aplicativo interativo foi desenvolvido para explorar a base de dados de clientes de cartões de crédito, entender os fatores que levam ao cancelamento do serviço (*churn*) e simular o risco de evasão de novos perfis.
 """)
 
-st.info("👈 Selecione uma página no menu lateral para começar.")
+st.markdown("### 🧭 Navegação")
+st.markdown("""
+Utilize a barra lateral à esquerda para acessar as diferentes visões do projeto:
+
+*   **📈 01. Visão de Negócio:** Explore os perfis demográficos e a distribuição geral da base.
+*   **📊 02. Qualidade do Ativo:** Analise limites de crédito, volumetria de transações e comportamento financeiro.
+*   **⚙️ 03. Simulador de Churn:** Uma ferramenta interativa para testar perfis de clientes contra o modelo preditivo.
+""")
+
+st.info("👈 Abra o menu lateral clicando no ícone no canto superior esquerdo para começar.")
