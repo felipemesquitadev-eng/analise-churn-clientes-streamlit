@@ -10,12 +10,10 @@ st.title("📊 Qualidade do Ativo")
 
 @st.cache_data
 def carregar_dados():
-    return pd.read_csv('data/dataset_limpo.csv')
+    return pd.read_csv('data/processed/dataset_limpo.csv')
 
 try:
     df = carregar_dados()
-    st.success("Dados carregados com sucesso!")
-    st.dataframe(df.head())
-    
-except FileNotFoundError:
-    st.error("Arquivo de dados não encontrado. Verifique se o 'dataset_limpo.csv' está na pasta 'data/'.")
+except Exception as e:
+    st.error("Erro ao carregar o arquivo: {e}")
+    st.stop()

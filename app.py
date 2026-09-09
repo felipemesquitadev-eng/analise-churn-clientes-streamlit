@@ -12,7 +12,7 @@ st.title("💳 Previsão e Análise de Churn de Cartões de Crédito")
 st.write("""
 Bem-vindo ao **Dashboard Executivo de Análise de Clientes**. 
 
-Este aplicativo interativo foi desenvolvido para explorar a base de dados de clientes de cartões de crédito, entender os fatores que levam ao cancelamento do serviço (*churn*) e simular o risco de evasão de novos perfis.
+Este site[aplicativo] interativo foi desenvolvido para explorar a base de dados de clientes de cartões de crédito, entender os fatores que levam ao cancelamento do serviço (*churn*) e simular o risco de evasão de novos perfis.
 """)
 
 st.markdown("### 🧭 Navegação")
