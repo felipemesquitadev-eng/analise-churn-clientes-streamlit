@@ -97,3 +97,63 @@ fig_status = px.pie(
     }
 )
 col_grafico2.plotly_chart(fig_status, use_container_width=True)
+
+st.divider()
+
+# Gráfico 3
+st.subheader("Aprofundamento de Perfil vs. Churn", anchor=False)
+col_grafico3, col_grafico4 = st.columns(2)
+
+contagem_status = df_filtrado['status_cliente'].value_counts()
+qtd_ativo = contagem_status.get('Ativo', 0)
+qtd_cancelado = contagem_status.get('Cancelado', 0)
+
+if qtd_ativo >= qtd_cancelado:
+    ordem_status = ['Cancelado', 'Ativo'] # Vermelho embaixo, Verde em cima
+else:
+    ordem_status = ['Ativo', 'Cancelado'] # Verde embaixo, Vermelho em cima
+
+fig_idade = px.histogram(
+    df_filtrado, 
+    x='idade', 
+    color='status_cliente', 
+    title='Distribuição de Idade por Status',
+    color_discrete_map={
+        'Ativo': '#2ca02c',
+        'Cancelado': '#d62728'
+    },
+    labels={
+        'status_cliente': 'Status do Cliente', 
+        'idade': 'Idade'
+    },
+    category_orders={
+        'status_cliente': ordem_status
+    } 
+)
+fig_idade.update_layout(barmode='stack')
+col_grafico3.plotly_chart(fig_idade, use_container_width=True)
+
+# Gráfico 4: Churn por Categoria de Cartão (Barras Agrupadas)
+df_cartao = df_filtrado.groupby(['categoria_cartao', 'status_cliente']).size().reset_index(name='Quantidade')
+
+fig_cartao = px.bar(
+    df_cartao, 
+    x='categoria_cartao', 
+    y='Quantidade', 
+    color='status_cliente',
+    title='Volume por Categoria de Cartão',
+    barmode='group', 
+    text_auto=True,
+    color_discrete_map={
+        'Ativo': '#2ca02c',
+        'Cancelado': '#d62728'
+    },
+    labels={
+        'status_cliente': 'Status do Cliente', 
+        'categoria_cartao': 'Categoria do Cartão'
+    },
+    category_orders={
+        'categoria_cartao': ['Azul', 'Prata', 'Ouro', 'Platina']
+    }
+)
+col_grafico4.plotly_chart(fig_cartao, use_container_width=True)
