@@ -80,7 +80,7 @@ fig_renda = px.bar(
 )
 col_grafico1.plotly_chart(fig_renda, use_container_width=True)
 
-# GRÁFICO 2: Proporção de Churn (Gráfico de Rosca)
+# Gráfico 2: Proporção de Churn (Gráfico de Rosca)
 df_status = df_filtrado['status_cliente'].value_counts().reset_index()
 df_status.columns = ['Status', 'Quantidade']
 
