@@ -9,20 +9,20 @@ def carregar_dados():
 try:
     df = carregar_dados()
 except Exception as e:
-    st.error(f"Erro ao carregar os dados: {e}")
+    st.error(f"Erro ao carregar os dados: {e}", icon=":material/warning:")
     st.stop()
 
-st.title("📈 Visão de Negócio - Perfil dos Clientes")
-st.markdown("Analise os indicadores demográficos e o comportamento de cancelamento (*churn*).")
-st.info("👈 Selecione os filtros que quiser à esquerda.")
+st.title(":material/query_stats: Visão de Negócio - Perfil dos Clientes", anchor=False)
+st.markdown("Analise dos indicadores demográficos e o comportamento de cancelamento (*churn*).")
+st.info("Selecione os filtros que quiser à esquerda.", icon=":material/arrow_back:")
 
 # Filtros
 st.sidebar.header("Filtros Globais")
 df_filtrado = df.copy()
 
-categorias_cartao = list(df['categoria_cartao'].unique())
+categorias_cartao = ['Azul', 'Prata', 'Ouro', 'Platina']
 filtro_cartao = st.sidebar.multiselect("Categoria do Cartão", categorias_cartao)
-if filtro_cartao:  # Se a lista não estiver vazia
+if filtro_cartao:  
     df_filtrado = df_filtrado[df_filtrado['categoria_cartao'].isin(filtro_cartao)]
 
 generos = list(df['genero'].unique())
@@ -30,24 +30,29 @@ filtro_genero = st.sidebar.multiselect("Gênero", generos)
 if filtro_genero:
     df_filtrado = df_filtrado[df_filtrado['genero'].isin(filtro_genero)]
 
-rendas = list(df['faixa_renda'].unique())
+rendas = ['Menos de $40 mil', '$40 mil - $60 mil', '$60 mil - $80 mil', '$80 mil - $120 mil', 'Mais de $120 mil']
 filtro_renda = st.sidebar.multiselect("Faixa de Renda", rendas)
 if filtro_renda: 
     df_filtrado = df_filtrado[df_filtrado['faixa_renda'].isin(filtro_renda)]
 
-estados_civis = list(df['estado_civil'].unique())
+estados_civis = ['Solteiro', 'Casado', 'Divorciado']
 filtro_estado_civil = st.sidebar.multiselect("Estado Civil", estados_civis)
 if filtro_estado_civil:
     df_filtrado = df_filtrado[df_filtrado['estado_civil'].isin(filtro_estado_civil)]
 
-escolaridades = list(df['escolaridade'].unique())
+escolaridades = ['Sem escolaridade', 'Ensino Médio', 'Superior Incompleto', 'Graduação', 'Pós-graduação', 'Doutorado']
 filtro_escolaridade = st.sidebar.multiselect("Escolaridade", escolaridades)
 if filtro_escolaridade:
     df_filtrado = df_filtrado[df_filtrado['escolaridade'].isin(filtro_escolaridade)]
 
+if df_filtrado.empty:
+    st.warning("Nenhum cliente encontrado com essa combinação de filtros. Por favor, ajuste as opções na barra lateral.", icon=":material/warning:")
+    st.stop()
+
 # Resumo de indicadores
 st.subheader("Resumo de Indicadores", anchor=False)
 
+# Trava de segurança
 col1, col2, col3, col4 = st.columns(4)
 total_clientes = len(df_filtrado)
 
@@ -100,22 +105,26 @@ col_grafico2.plotly_chart(fig_status, use_container_width=True)
 
 st.divider()
 
-# Gráfico 3
-st.subheader("Aprofundamento de Perfil vs. Churn", anchor=False)
+st.subheader("Aprofundamento de Perfil vs. *Churn*", anchor=False)
 col_grafico3, col_grafico4 = st.columns(2)
 
+# Gráfico 3: Distribuição de Idade por Status (Histograma)
 contagem_status = df_filtrado['status_cliente'].value_counts()
 qtd_ativo = contagem_status.get('Ativo', 0)
 qtd_cancelado = contagem_status.get('Cancelado', 0)
 
+ordem_status = []
+ordem_legenda = ''
 if qtd_ativo >= qtd_cancelado:
     ordem_status = ['Cancelado', 'Ativo'] # Vermelho embaixo, Verde em cima
+    ordem_legenda = 'reversed'
 else:
     ordem_status = ['Ativo', 'Cancelado'] # Verde embaixo, Vermelho em cima
+    ordem_legenda = 'normal'
 
 fig_idade = px.histogram(
     df_filtrado, 
-    x='idade', 
+    x='idade',
     color='status_cliente', 
     title='Distribuição de Idade por Status',
     color_discrete_map={
@@ -123,14 +132,18 @@ fig_idade = px.histogram(
         'Cancelado': '#d62728'
     },
     labels={
-        'status_cliente': 'Status do Cliente', 
-        'idade': 'Idade'
+        'status_cliente': 'Status do Cliente',
+        'idade': 'Idade',
     },
     category_orders={
         'status_cliente': ordem_status
     } 
 )
-fig_idade.update_layout(barmode='stack')
+fig_idade.update_layout(
+    barmode='stack',
+    yaxis_title='Quantidade de Clientes',
+    legend_traceorder=ordem_legenda
+)
 col_grafico3.plotly_chart(fig_idade, use_container_width=True)
 
 # Gráfico 4: Churn por Categoria de Cartão (Barras Agrupadas)
