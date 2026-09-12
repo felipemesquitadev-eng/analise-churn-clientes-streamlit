@@ -2,11 +2,12 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Análise e Previsão de Churn",
+    page_icon=':material/credit_card_gear:',
     layout="wide"
 )
 
 def home_page():
-    st.title(":material/credit_card: Análise e Previsão de Churn de Cartões de Crédito", anchor=False)
+    st.title(":material/credit_card_gear: Análise e Previsão de Churn de Cartões de Crédito", anchor=False)
 
     st.write("""
     Bem-vindo ao **Dashboard Executivo de Análise de Clientes**. 
@@ -31,23 +32,20 @@ pagina_inicial = st.Page(
     icon=":material/home:", 
     default=True
 )
-
 visao_negocio = st.Page(
     "pages/01_Visao_de_Negocio.py", 
     title="Visão de Negócio", 
     icon=":material/query_stats:"
 )
-
 qualidade_ativo = st.Page(
     "pages/02_Qualidade_do_Ativo.py", 
     title="Qualidade do Ativo", 
     icon=":material/payments:"
 )
-
 simulador = st.Page(
     "pages/03_Simulador_de_Churn.py", 
     title="Simulador de Churn", 
-    icon=":material/science:"
+    icon=":material/manufacturing:"
 )
 
 pg = st.navigation({

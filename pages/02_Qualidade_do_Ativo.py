@@ -11,4 +11,4 @@ except Exception as e:
     st.error("Erro ao carregar o arquivo: {e}", icon=":material/warning:")
     st.stop()
 
-st.title(":material/payments: Qualidade do Ativo")
+st.title(":material/payments: Qualidade do Ativo", anchor=False)
