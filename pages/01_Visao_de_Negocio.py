@@ -55,7 +55,6 @@ st.subheader("Resumo de Indicadores", anchor=False)
 # Trava de segurança
 col1, col2, col3, col4 = st.columns(4)
 total_clientes = len(df_filtrado)
-
 clientes_churn = len(df_filtrado[df_filtrado['status_cliente'] == 'Cancelado'])
 taxa_churn = (clientes_churn / total_clientes * 100) if total_clientes > 0 else 0
 idade_media = df_filtrado['idade'].mean() if total_clientes > 0 else 0
@@ -169,4 +168,5 @@ fig_cartao = px.bar(
         'categoria_cartao': ['Azul', 'Prata', 'Ouro', 'Platina']
     }
 )
+fig_cartao.update_traces(textposition='outside')
 col_grafico4.plotly_chart(fig_cartao, use_container_width=True)
