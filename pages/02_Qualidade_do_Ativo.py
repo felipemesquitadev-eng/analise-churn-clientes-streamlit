@@ -24,10 +24,10 @@ st.info(
 
 # Filtragem
 df_filtrado = aplicar_filtros_sidebar(df)
-
 if df_filtrado.empty:
     st.warning("Nenhum cliente encontrado com essa combinação de filtros. Por favor, ajuste as opções na barra lateral.", icon=":material/warning:")
     st.stop()
+botao_download(df_filtrado, nome_arquivo="clientes_qualidade_ativo.csv", container=st.sidebar)
 
 st.subheader("Métricas Financeiras da Carteira", anchor=False)
 

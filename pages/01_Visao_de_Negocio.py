@@ -24,10 +24,10 @@ st.info(
 
 # Filtragem
 df_filtrado = aplicar_filtros_sidebar(df)
-
 if df_filtrado.empty:
     st.warning("Nenhum cliente encontrado com essa combinação de filtros. Por favor, ajuste as opções na barra lateral.", icon=":material/warning:")
     st.stop()
+botao_download(df_filtrado, nome_arquivo="clientes_visao_negocio.csv", container=st.sidebar)
 
 # Resumo de indicadores
 st.subheader("Resumo de Indicadores", anchor=False)
@@ -83,9 +83,12 @@ with tab_panorama:
     else:
         texto_razao = ""
 
+    pior_faixa_str = str(pior_faixa).replace('$', r'\$')
+    melhor_faixa_str = str(melhor_faixa).replace('$', r'\$')
+
     col_grafico1.caption(
-        f":material/insights: **{pior_faixa}** é a faixa de renda com maior risco de churn "
-        f"({pior_taxa:.1f}%){texto_razao} do que **{melhor_faixa}** ({melhor_taxa:.1f}%), a mais estável. "
+        f":material/insights: **{pior_faixa_str}** é a faixa de renda com maior risco de churn "
+        f"({pior_taxa:.1f}%){texto_razao} do que **{melhor_faixa_str}** ({melhor_taxa:.1f}%), a mais estável. "
         f"A taxa geral da base filtrada é {taxa_churn:.1f}%."
     )
 

@@ -87,7 +87,10 @@ def definir_ordem_legenda(df: pd.DataFrame, coluna_status: str = 'status_cliente
     return ordem_categorias, ordem_legenda
 
 def formata_moeda(valor: float) -> str:
-    return f"US$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    if pd.isna(valor):
+        return r"US\$ 0,00"
+    valor_formatado = f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"US\\$ {valor_formatado}"
 
 def formata_percentual(valor: float) -> str:
     return f"{valor:.2f}%".replace(".", ",")
@@ -99,7 +102,7 @@ def botao_download(df: pd.DataFrame, nome_arquivo: str,
     'container' permite renderizar em st.sidebar, dentro de uma coluna, etc.
     Se None, renderiza no fluxo normal (corpo da página)."""
     destino = container if container is not None else st
-    destino.caption(":material/download: Exporte o recorte atual dos dados:")
+    destino.caption("Exporte o recorte atual dos dados:")
     csv = df.to_csv(index=False, sep=';', decimal=',').encode('utf-8-sig')
     destino.download_button(
         label=label,
